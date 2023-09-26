@@ -1,0 +1,280 @@
+import java.util.Scanner;
+
+
+public class Main
+{
+   
+   public static void main(String[] args)
+   {
+      int computer = 0; // To hold the computer's points.
+      int user = 0;     // To hold the user's points.
+
+      // Play the game while the user's points are
+      // under the limit, and the user agrees to 
+      // roll the dice.
+      while(underLimit(user) && rollDice())
+      {
+         // Let the computer decide if it should
+         // roll the dice again without going over
+         // the limit.
+         if (underLimit(computer + getDiceValue()))
+            computer += getDiceValue();
+         
+         // Roll the user's dice and display the
+         // total number of accumulated points.
+         user += getDiceValue();
+         System.out.println("Points: " + user);
+      }
+      
+      if (user == 0 && computer == 0)
+         System.out.println("Goodbye!");
+      else
+      {
+         displayResults(computer, user);
+      }
+   }
+
+
+
+     
+
+     
+     /*
+      int computer=0;
+     int user=0;
+     
+      // Play the game while the user's points are
+      // under the limit, and the user agrees to 
+      // roll the dice.
+      while(underLimit(user)&& rollDice()){
+        
+       // Let the computer decide if it should
+         // roll the dice again without going over
+         // the limit.
+        if(underLimit(computer + getDiceValue()))
+          computer+=getDiceValue();
+
+    // Roll the user's dice and display the
+    // total number of accumulated points.
+        user+=getDiceValue();
+        System.out.println("Points: " + user);
+      }
+        if(user==0 && computer==0)
+          System.out.println("Goodbye!");
+     else
+          dispayResults(computer, user);
+  
+
+     while (true){
+      int computerRoll1 = d1.getValue();
+      int computerRoll2 = d2.getValue();
+      int computerRoll = compterRoll1+computerRoll2;
+       
+      // Play the game while the user's points are
+      // under the limit, and the user agrees to 
+      // roll the dice.
+       computerTotal+= computerRoll;
+      while(computer<= 21 && user<=21){
+        int compterRoll=d1.getValue()+d1.getSides();
+        //computer total validation
+
+        if((computerRoll+computerTotal)>21){
+          break;
+        }
+        computerTotal=computerRoll+computerTotal;
+      }
+        
+      { 
+         // Let the computer decide if it should
+         // roll the dice again without going over
+         // the limit.
+         if (underLimit(computer + getDiceValue()))
+            computer += getDiceValue();
+         
+         // Roll the user's dice and display the
+         // total number of accumulated points.
+         user += getDiceValue();
+         System.out.println("Points: " + user);
+      
+      if (user == 0 && computer == 0)
+      {
+         System.out.println("Goodbye!");
+      }
+      else 
+         displayResults(computer, user);
+   }
+     }
+      */
+   
+   /**
+      The getDiceValue method simulates the rolling 
+      of a pair of dice.
+      @return The sum of the value of the dice.
+   */ 
+   
+   public static int getDiceValue()
+   {
+     Die die = new Die();
+     int roll1 = die.getValue();
+     die.roll();
+     int roll2 = die.getValue();
+     return roll1 + roll2;
+
+   }
+
+   /**
+      The rollDice method asks the user to roll
+      the dice, accepting keyboard input as the
+      answer.
+      @return true if the user wants to roll the 
+              dice, or false otherwise.
+   */ 
+   
+   public static boolean rollDice()
+   { 
+     Scanner keyboard = new Scanner(System.in);
+     System.out.println("Do you want to get the dice rolling? Enter (yes/no) ");
+    String userInput = keyboard.nextLine();
+
+     while (!isValid(userInput))
+       {
+         System.out.println("Do you want to get the dice rolling? Enter (yes/no) ");
+         userInput = keyboard.nextLine();
+       }
+     boolean roll;
+     if (userInput.compareToIgnoreCase("Yes") == 0)
+       roll = true;
+     else
+       roll = false;
+    return roll;
+   }
+   
+   /**
+      The underLimit method determines if the
+      points are under the limit of 21.
+      @return true if points are less than 21,
+              or false otherwise.
+   */
+   
+   public static boolean underLimit(int value)
+   {
+     boolean underLimit;
+        
+     if (value >21 )
+     {
+       underLimit=false;
+     }
+        else
+       underLimit=true;
+        
+     return underLimit;
+ 
+   }
+   
+   /**
+      The isValid method validates the user input.
+      @return true if the input is valid, or
+              false otherwise.
+   */
+   
+   public static boolean isValid(String decision)
+   {
+     boolean isValid =false;
+  if (decision.compareToIgnoreCase("Yes") == 0 || decision.compareToIgnoreCase("No") == 0)
+    isValid = true;
+     
+  return isValid;
+
+   }
+   
+   /**
+      The displayResults method determines the results
+      of the game and displays them.
+   */
+   
+   public static void displayResults(int computer, int user)
+   {
+     String championMessage;
+
+     System.out.println("Here are the results for the game");
+     System.out.println("Your total is: " + user );
+     System.out.println("Computer's total is: " + computer);
+     if (user > 21)
+     {
+       System.out.println("Computer Won!");
+     }
+     else if (computer > 21)
+     {
+       System.out.println("Great! You Won!");
+     }
+     else if (user > computer )
+     {
+       System.out.println("Computer Won!");
+     }
+     else if (user <computer)
+     {
+       System.out.println("Great! You Won!");
+     }
+     else if (user == computer)
+     {
+       System.out.println("It's a draw! :) Play again.");
+     }
+
+   }
+}
+
+
+
+
+//The code below is for the Die.java 
+import java.util.Random;   // Needed for Random class
+
+/**
+   The Die class stores data about a six-sided die
+   for the A Game of Twenty One programming challenge.
+*/
+
+public class Die
+{
+   private final int SIDES = 6;  // The number of sides
+   private int value;            // The value of the die
+   
+   /**
+      The constructor calls the roll method to set
+      the intitial value of the die to a random
+      number.
+    */
+   
+    Die()
+   {
+    
+      // Call the roll method to randomly 
+      // set the value of the die.
+      roll();
+   }
+   
+   
+   /**
+      The roll method sets the value of the die
+      to a random number.
+    */
+   
+   public void roll()
+   {
+      // Create a random object.
+      Random randomValue = new Random();
+      
+      // Set the value to a random number.
+      value = randomValue.nextInt(SIDES) + 1;
+   }
+   
+   /**
+      The getValue method returns the value
+      of the die.
+    */
+   
+   public int getValue()
+   {
+      return value;
+   }
+}
