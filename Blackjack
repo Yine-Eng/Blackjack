@@ -226,7 +226,7 @@ public class Main
 
 
 
-//The code below is for the Die.java 
+//The code below is for the Die.java file I created 
 import java.util.Random;   // Needed for Random class
 
 /**
